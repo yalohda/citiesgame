@@ -1,37 +1,38 @@
-Spic_town = set([
-'здесь будут города'
-])
-dob=set([])
-def runner():
-i=1
-a = str(input())
-print('used - ',a)
-dob.add(a)
-posl = a[-1]
-if posl == 'ь': posl = a[-2]
-posl = posl.title()
-
-while(a in dob):
-i+=1
-if (i%2==1):
-a = str(input())
-if posl1==a[0]:
-print('used - ',a)
-dob.add(a)
-posl = a[-1]
-if posl == 'ь': posl = a[-2]
-posl = posl.title()
-else:
-print('Не та буква!')
-else:
-if a in spic_town:
-for b in spic_town.difference(dob):
-if posl==b[0]:
-print('bot - ',b)
-dob.add(b)
-posl1 = b[-1]
-if posl1 == 'ь': posl1 = b[-2]
-posl1 = posl1.title()
-break
-else:
-print('Нет такого города!')
+import goroda_db 
+from random import choice 
+count=0 #счётчик раундов
+goroda_copy=goroda_db.goroda().copy()
+def first_letter(word):
+    first_letter=word[0]
+    return first_letter
+  ef end_letter(word):
+    end_letter=word[len(word)-1]
+    if end_letter=='ь' or end_letter=='й' or end_letter=='ы':
+        end_letter=word[len(word)-2]
+    return end_letter
+  def first_turn_comp():
+    return choice(goroda_db.goroda())
+  def computer_turn(turn_player):
+    first_letter_tc=end_letter(turn_player) 
+    goroda_copy.remove(turn_player)        
+    list=[]
+    for i in goroda_copy:         
+        if first_letter_tc.upper()==first_letter(i):
+            list.append(i)
+    choice_comp=choice(list)                 
+    goroda_copy.remove(choice_comp)          
+    return choice_comp
+  turn_comp = print("Ход компьютера: ", first_turn_comp())
+turn_player = str(input("Ход игрока, введите слово: "))
+while True:
+    if turn_player in goroda_copy:
+        print("Ход компьютера: ", computer_turn(turn_player))
+        turn_player = str(input("Ход игрока, введите слово: "))
+        count+=1
+    else:
+        if turn_player not in goroda_db.goroda():# Проверяем существует вообще город который ввёл игрок или нет
+            print("Такого города вообще не существует, раундов сыграно:", count)
+            break
+        else:
+           print("Такой город уже был, раундов сыграно:", count)
+           breaks
